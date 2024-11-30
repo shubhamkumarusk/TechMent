@@ -9,7 +9,7 @@ interface RetrofitServices {
 
     @GET("search/repositories")
     suspend fun searchRepositories(
-        @Query("q") query: String
+        @Query("q") query: String = "friendsnetwork"
     ): Response<GitHubResponse>
 
 }

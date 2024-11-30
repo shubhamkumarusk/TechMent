@@ -13,6 +13,9 @@ class GitViewModel(private val repository: Repository):ViewModel() {
     private val _gitRepositories = MutableLiveData<Result<List<GitHubRepo>>>()
     val gitRepositories: LiveData<Result<List<GitHubRepo>>> = _gitRepositories
 
+    init {
+        searchRepo("friendsnetwork")
+    }
     fun searchRepo(query: String){
         viewModelScope.launch {
             try{

@@ -12,7 +12,14 @@
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_homeFragment_to_repoFragment"
-            app:destination="@id/repoFragment" />
+            app:destination="@id/repoFragment">
+            <argument
+                android:name="repoid"
+                app:argType="com.example.techmintshubhamkumar.models.GitHubRepo" />
+
+        </action>
+
+
     </fragment>
     <fragment
         android:id="@+id/repoFragment"

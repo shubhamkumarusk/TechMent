@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.techmintshubhamkumar.R
 import com.example.techmintshubhamkumar.databinding.RepoLayoutBinding
 import com.example.techmintshubhamkumar.models.GitHubRepo
 import com.example.techmintshubhamkumar.models.GitHubResponse
@@ -15,8 +17,13 @@ class HomeAdapter(private val onRepoClicked : (GitHubRepo)->Unit):ListAdapter<Gi
 
     class HomeViewHolder(private val binding:RepoLayoutBinding):RecyclerView.ViewHolder(binding.root){
         fun bind(repo:GitHubRepo){
-            binding.repoOwnerNameTv.text = repo.name
+            binding.repoOwnerNameTv.text = repo.owner?.login
             binding.description.text = repo.description
+            Glide.with(itemView.context)
+                .load(repo.owner?.avatar_url)
+                .centerCrop()
+                .into(binding.image)
+
         }
     }
 
@@ -31,7 +38,6 @@ class HomeAdapter(private val onRepoClicked : (GitHubRepo)->Unit):ListAdapter<Gi
             override fun areContentsTheSame(oldItem: GitHubRepo, newItem: GitHubRepo): Boolean {
                 return oldItem==newItem
             }
-
         }
     }
 
