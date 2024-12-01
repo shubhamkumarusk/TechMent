@@ -75,6 +75,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:textStyle="bold"
+        android:focusable="true"
+        android:clickable="true"
         android:textColor="@color/name_color"
         android:layout_margin="10dp"
         app:layout_constraintBottom_toBottomOf="parent"

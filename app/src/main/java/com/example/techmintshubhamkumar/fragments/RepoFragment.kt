@@ -1,5 +1,6 @@
 package com.example.techmintshubhamkumar.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -16,6 +17,7 @@ import com.example.techmintshubhamkumar.models.GitHubRepo
 import com.example.techmintshubhamkumar.repositories.Repository
 import com.example.techmintshubhamkumar.viewmodels.GitViewModel
 import com.example.techmintshubhamkumar.viewmodels.GitViewModelFactory
+import com.example.techmintshubhamkumar.webviews.ProjectWebView
 
 
 class RepoFragment : Fragment() {
@@ -44,7 +46,11 @@ class RepoFragment : Fragment() {
 
         val gitHubRepository = argument.repo
         bindData(gitHubRepository)
-
+        binding.projectLink.setOnClickListener {
+            val intent = Intent(context, ProjectWebView::class.java)
+            intent.putExtra("url", gitHubRepository?.html_url)
+            startActivity(intent)
+        }
 
 
 
