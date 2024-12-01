@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
+import com.example.techmintshubhamkumar.models.GitHubRepo
 import com.example.techmintshubhamkumar.models.Users
 import com.example.techmintshubhamkumar.repositories.Repository
 import kotlinx.coroutines.launch
@@ -14,6 +15,7 @@ import kotlinx.coroutines.launch
 
 class GitViewModel(private val repository: Repository):ViewModel() {
     private val _query = MutableLiveData<String>("q") // Default query
+
     val gitRepositories = _query.switchMap { query ->
         repository.searchRepo(query).cachedIn(viewModelScope)
     }
@@ -32,11 +34,13 @@ class GitViewModel(private val repository: Repository):ViewModel() {
             val response = repository.fetchContributors(contributorsUrl)
             if (response.isSuccessful) {
                 _contributors.postValue(response.body() ?: listOf())
+
             } else {
                 _contributors.postValue(listOf())
             }
         }
     }
+
 }
 
 class GitViewModelFactory(private val repository: Repository) : ViewModelProvider.Factory {
