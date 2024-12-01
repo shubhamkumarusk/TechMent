@@ -4,42 +4,28 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.liveData
+import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.example.techmintshubhamkumar.models.GitHubRepo
 import com.example.techmintshubhamkumar.repositories.Repository
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.collectLatest
+
 
 class GitViewModel(private val repository: Repository):ViewModel() {
-    private val _gitRepositories = MutableLiveData<Result<List<GitHubRepo>>>()
-    val gitRepositories: LiveData<Result<List<GitHubRepo>>> = _gitRepositories
-
-    init {
-        searchRepo("friendsnetwork")
+    private val _query = MutableLiveData<String>("q") // Default query
+    val gitRepositories = _query.switchMap { query ->
+        repository.searchRepo(query).cachedIn(viewModelScope)
     }
-    fun searchRepo(query: String){
-        viewModelScope.launch {
-            try{
-                val response = repository.searchRepo(query)
-                if(response.isSuccessful) {
-                    response.body()?.let {
-                        _gitRepositories.postValue(Result.success(it.items))
 
-                    } ?: run {
-                        _gitRepositories.postValue(Result.failure(Exception("Empty response body")))
-                    }
-                } else{
-                    _gitRepositories.postValue(Result.failure(Exception("Error: ${response.code()} ${response.message()}")))
-                }
-
-            }catch (e:Exception){
-                _gitRepositories.postValue(Result.failure(e))
-            }
+    fun searchRepo(query: String) {
+        if (query.isNotEmpty()) {
+            _query.value = query
         }
     }
-
-
-
-
 }
 
 class GitViewModelFactory(private val repository: Repository) : ViewModelProvider.Factory {

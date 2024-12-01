@@ -3,6 +3,7 @@ package com.example.techmintshubhamkumar.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -12,7 +13,7 @@ import com.example.techmintshubhamkumar.databinding.RepoLayoutBinding
 import com.example.techmintshubhamkumar.models.GitHubRepo
 import com.example.techmintshubhamkumar.models.GitHubResponse
 
-class HomeAdapter(private val onRepoClicked : (GitHubRepo)->Unit):ListAdapter<GitHubRepo,HomeAdapter.HomeViewHolder>(DiffCallback){
+class HomeAdapter(private val onRepoClicked : (GitHubRepo)->Unit):PagingDataAdapter<GitHubRepo,HomeAdapter.HomeViewHolder>(DiffCallback){
 
 
     class HomeViewHolder(private val binding:RepoLayoutBinding):RecyclerView.ViewHolder(binding.root){
@@ -52,9 +53,9 @@ class HomeAdapter(private val onRepoClicked : (GitHubRepo)->Unit):ListAdapter<Gi
     override fun onBindViewHolder(holder: HomeViewHolder, position: Int) {
         val curr = getItem(position)
         holder.itemView.setOnClickListener {
-            onRepoClicked(curr)
+           curr?.let { onRepoClicked(it) }
         }
-        holder.bind(curr)
+        curr?.let { holder.bind(it) }
     }
 
 

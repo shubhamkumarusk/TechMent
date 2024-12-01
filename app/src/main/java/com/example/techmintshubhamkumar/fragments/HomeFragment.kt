@@ -44,25 +44,24 @@ class HomeFragment : Fragment() {
             val action = HomeFragmentDirections.actionHomeFragmentToRepoFragment(it)
             findNavController().navigate(action)
         })
-
-        viewmodel.gitRepositories.observe(viewLifecycleOwner) { result ->
-            result.fold(
-                onSuccess = { repoList ->
-                    Log.d("repos",repoList.size.toString())
-                    adapter.submitList(repoList)
-                },
-                onFailure = { error ->
-                    Log.e("ErrorHomeFragment", "Error fetching repositories", error)
-                }
-            )
-        }
-
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
+        viewmodel.gitRepositories.observe(viewLifecycleOwner){
+            adapter.submitData(viewLifecycleOwner.lifecycle,it)
+        }
+
+        binding.searchArrow.setOnClickListener {
+            val query = binding.searchView.query.toString()
+            Log.d("query",query)
+            if(query.isNotEmpty()){
+                viewmodel.searchRepo(query)
+                Log.d("ListSize",viewmodel.gitRepositories.toString())
+            }
+        }
+
+
     }
-
-
 
 
 }
