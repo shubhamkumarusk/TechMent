@@ -7,6 +7,7 @@ import androidx.paging.PagingData
 import androidx.paging.liveData
 import com.example.techmintshubhamkumar.models.GitHubRepo
 import com.example.techmintshubhamkumar.models.GitHubResponse
+import com.example.techmintshubhamkumar.models.Users
 import com.example.techmintshubhamkumar.paging.RepoPagingSource
 import com.example.techmintshubhamkumar.retrofit.RetrofitHelper
 import com.example.techmintshubhamkumar.retrofit.RetrofitServices
@@ -24,5 +25,9 @@ class Repository {
             ),
             pagingSourceFactory = { RepoPagingSource(api, query) }
         ).liveData
+    }
+
+    suspend fun fetchContributors(url:String):Response<List<Users>>{
+        return api.getContributors(url)
     }
 }

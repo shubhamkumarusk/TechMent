@@ -40,8 +40,8 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = HomeAdapter({
-            val action = HomeFragmentDirections.actionHomeFragmentToRepoFragment(it)
+        val adapter = HomeAdapter({repo->
+            val action = HomeFragmentDirections.actionHomeFragmentToRepoFragment(repo)
             findNavController().navigate(action)
         })
         binding.recyclerView.adapter = adapter

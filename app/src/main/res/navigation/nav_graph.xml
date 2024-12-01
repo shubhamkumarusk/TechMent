@@ -10,14 +10,11 @@
         android:name="com.example.techmintshubhamkumar.fragments.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
+
         <action
             android:id="@+id/action_homeFragment_to_repoFragment"
-            app:destination="@id/repoFragment">
-            <argument
-                android:name="repoid"
-                app:argType="com.example.techmintshubhamkumar.models.GitHubRepo" />
+            app:destination="@id/repoFragment"/>
 
-        </action>
 
 
     </fragment>
@@ -25,5 +22,11 @@
         android:id="@+id/repoFragment"
         android:name="com.example.techmintshubhamkumar.fragments.RepoFragment"
         android:label="fragment_repo"
-        tools:layout="@layout/fragment_repo" />
+        tools:layout="@layout/fragment_repo">
+        <argument
+            android:name="repo"
+            app:argType="com.example.techmintshubhamkumar.models.GitHubRepo"
+            app:nullable="true"
+            />
+    </fragment>
 </navigation>

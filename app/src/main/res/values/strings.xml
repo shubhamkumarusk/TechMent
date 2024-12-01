@@ -2,4 +2,7 @@
     <string name="app_name">TechMintShubhamkumar</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="ownerimage">ownerImage</string>
+    <string name="contributors">Contributors</string>
+    <string name="project_link">Project Link</string>
 </resources>
